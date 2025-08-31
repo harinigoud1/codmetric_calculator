@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculator</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #222831;
+      font-family: Arial, sans-serif;
+      margin: 0;
+    }
+    .calculator {
+      background: #393e46;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    #display {
+      width: 100%;
+      height: 50px;
+      font-size: 22px;
+      text-align: right;
+      margin-bottom: 15px;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      background: #eeeeee;
+    }
+    .buttons {
+      display: grid;
+      grid-template-columns: repeat(4, 70px);
+      gap: 10px;
+    }
+    button {
+      height: 60px;
+      font-size: 20px;
+      font-weight: bold;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    button:hover {
+      opacity: 0.8;
+    }
+    .num, .dot { background: #00adb5; color: white; }
+    .op { background: #ff5722; color: white; }
+    .eq { background: #009688; color: white; grid-column: span 2; }
+    .clear { background: #f44336; color: white; grid-column: span 2; }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <input type="text" id="display" disabled>
+    <div class="buttons">
+      <button class="num">7</button>
+      <button class="num">8</button>
+      <button class="num">9</button>
+      <button class="op">/</button>
+
+      <button class="num">4</button>
+      <button class="num">5</button>
+      <button class="num">6</button>
+      <button class="op">*</button>
+
+      <button class="num">1</button>
+      <button class="num">2</button>
+      <button class="num">3</button>
+      <button class="op">-</button>
+
+      <button class="num">0</button>
+      <button class="dot">.</button>
+      <button class="op">+</button>
+      <button class="eq">=</button>
+
+      <button class="clear">C</button>
+    </div>
+  </div>
+
+  <script>
+    const display = document.getElementById("display");
+    const buttons = document.querySelectorAll("button");
+    let expression = "";
+
+    buttons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (btn.classList.contains("num") || btn.classList.contains("op") || btn.classList.contains("dot")) {
+          expression += btn.textContent;
+          display.value = expression;
+        }
+        else if (btn.classList.contains("clear")) {
+          expression = "";
+          display.value = "";
+        }
+        else if (btn.classList.contains("eq")) {
+          try {
+            expression = eval(expression).toString();
+            display.value = expression;
+          } catch {
+            display.value = "Error";
+            expression = "";
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
